@@ -22,13 +22,13 @@ mongoose.connect(process.env.MONGO_URI)
 .then(()=>console.log("Teja Mongo DB Connected Successfully"))
 .catch((error)=>console.log(error))
 
-const PORT=4000
+const PORT=process.env.PORT || 4000;
 app.listen(PORT,()=>{
     console.log(`Teja Server Started At ${PORT}`);
 });
 
-app.use('/home',(req,res)=>{
-    res.send("<h1>Teja Welcome To MERN");
+app.use('/',(req,res)=>{
+    res.send("<h1>Teja Welcome To MERN Project");
 });
 
 app.use(bodyParser.json());
