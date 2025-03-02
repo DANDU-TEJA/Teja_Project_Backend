@@ -28,10 +28,12 @@ const addRice=async(req,res)=>{
 
     const savedRice=await rice.save();
 
+    const riceID=savedRice._id
+
     farmer.rice.push(savedRice)
     await farmer.save();
     
-    return res.status(200).json({message:"Rice Added Successfully"})
+    return res.status(200).json({message:"Rice Added Successfully" , riceID})
     }catch(error){
         console.log(error)
         res.status(500).json({message:"Rice Not Addded"})
