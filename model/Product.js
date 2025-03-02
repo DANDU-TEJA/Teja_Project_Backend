@@ -28,6 +28,7 @@ const productSchema =new mongoose.Schema({
     },
     orgfarmer:{
         type:[{
+            type:String,
             enum:['yes','no']
         }]
     },
