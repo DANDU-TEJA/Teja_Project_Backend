@@ -27,7 +27,9 @@ const productSchema =new mongoose.Schema({
         type:String
     },
     orgfarmer:{
-        type:String,
+        type:[{
+            enum:['yes','no']
+        }]
     },
     description:{
         type:String
