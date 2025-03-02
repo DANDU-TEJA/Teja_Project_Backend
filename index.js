@@ -6,6 +6,9 @@ const farmerRoutes =require('./routes/farmerRoutes')
 const riceRoutes=require('./routes/riceRoutes')
 const productRoutes=require('./routes/productRoutes');
 
+const cors =require('cors');
+
+
 //const cors=require('cors');
 
 //const path=require('path');
@@ -20,6 +23,7 @@ const mongoose=require("mongoose");
 
 const PORT = process.env.PORT || 4000;
 dotEnv.config();
+app.use(cors());
 
 mongoose.connect(process.env.MONGO_URI)
     .then(()=>console.log("Teja Mongo DB Connected Successfully"))

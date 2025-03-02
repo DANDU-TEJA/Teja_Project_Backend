@@ -2,6 +2,7 @@ const Product =require('../model/Product');
 const multer=require('multer');
 const Rice=require('../model/Rice')
 
+const path = require('path');
 
 const storage=multer.diskStorage({
     destination:function(req,file,cb){
