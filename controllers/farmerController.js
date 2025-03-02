@@ -8,7 +8,7 @@ dotEnv.config();
 const secretKey=process.env.WhatIsYourName;
 
 const farmerRegister=async(req,res)=>{
-    const {username,email,password}=req.body;
+    const {username,email,password,district,mandal,village,survy}=req.body;
     try{
         const farmerEmail = await Farmer.findOne({email});
         if(farmerEmail){
@@ -19,7 +19,11 @@ const farmerRegister=async(req,res)=>{
         const newFarmer= new Farmer({
             username,
             email,
-            password:hashedPassword
+            password:hashedPassword,
+            district,
+            mandal,
+            village,
+            survy
         });
         await newFarmer.save();
 

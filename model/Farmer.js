@@ -15,6 +15,23 @@ const farmerSchema = new mongoose.Schema({
         type:String,
         required : true
     },
+    district:{
+        type:String,
+        required:true,
+    },
+    mandal:{
+        type:String,
+        required:true,
+    },
+    village:{
+        type:String,
+        required:true,
+    },
+    survy:{
+        type:String,
+        required:true,
+    },
+    
     rice:[
         {
             type:mongoose.Schema.Types.ObjectId,
