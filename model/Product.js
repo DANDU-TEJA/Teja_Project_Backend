@@ -23,15 +23,14 @@ const productSchema =new mongoose.Schema({
             enum:['north-indian','south-indian']
         }]
     },
-    image:{
-        type:String
-    },
+   
     orgfarmer:{
-        type:[{
-            type:Boolean
-        }]
+        type:Boolean
     },
     description:{
+        type:String
+    },
+    image:{
         type:String
     },
     rice: [
