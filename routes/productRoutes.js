@@ -1,5 +1,7 @@
+
 const express=require('express');
 const productController =require('../controllers/productController');
+
 
 const router=express.Router();
 router.post('/add-product/:riceId',productController.addProduct);
@@ -15,3 +17,4 @@ router.get('/uploads/:imageName',(req,res)=>{
 
 router.delete('/:productId',productController.deleteProductById);
 module.exports=router;
+

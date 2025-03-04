@@ -45,7 +45,9 @@ const farmerLogin = async(req,res)=>{
 
         const token=jwt.sign({farmerId:farmer._id},secretKey,{expiresIn:"1h"})
 
-        res.status(200).json({success:"Logi Successful", token})
+        const farmerId=farmer._id;
+
+        res.status(200).json({success:"Logi Successful", token , farmerId})
         console.log(email,"This is Token ",token);
     }
     catch(error){
@@ -70,7 +72,9 @@ const getFarmerById=async(req,res)=>{
         if(!farmer){
             return res.status(404).json({error:"Farmer not founde"})
         }
-        res.status(200).json({farmer})
+        const farmerCropId=farmer.rice[0]._id;
+        res.status(200).json({farmerId ,farmerCropId})
+        console.log(farmerCropId);
     }catch(error){
         console.log(error)
         res.status(500).json({message:"farmer not found"})

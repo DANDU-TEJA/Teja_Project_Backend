@@ -16,7 +16,7 @@ const upload=multer({storage:storage});
 
 const addProduct=async(req,res)=>{
     try{
-        const {productName,price,quantity,color,region,orgfarmer,description}=req.body;
+        const {productName,price,quantity,color,region,description}=req.body;
         const image=req.file?req.file.filename:undefined;
 
         const riceId=req.params.riceId;
@@ -25,7 +25,7 @@ const addProduct=async(req,res)=>{
             return res.status(404).json({message:"No Rice Found"});
         }
         const product=new Product({
-            productName,price,quantity,color,region,orgfarmer,description,image,rice : rice._id
+            productName,price,quantity,color,region,description,image,rice : rice._id
         })
 
         const savedProduct=await product.save();

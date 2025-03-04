@@ -16,7 +16,7 @@ const upload=multer({storage:storage});
 
 const addRice=async(req,res)=>{
     try{
-        const {cropName,area,region,offer}=req.body;
+        const {cropName,area,region,orgfarmer,offer}=req.body;
     const image =req.file?req.file.filename: undefined;
 
     const farmer =await Farmer.findById(req.farmerId);
@@ -24,7 +24,7 @@ const addRice=async(req,res)=>{
         res.status(404).json({message:"farmer Not Found"})
     }
 
-    const rice = new Rice({cropName,area,region,offer,image,farmer : farmer._id})
+    const rice = new Rice({cropName,area,region,orgfarmer,offer,image,farmer : farmer._id})
 
     const savedRice=await rice.save();
 
@@ -32,6 +32,7 @@ const addRice=async(req,res)=>{
 
     farmer.rice.push(savedRice)
     await farmer.save();
+
     
     return res.status(200).json({message:"Rice Added Successfully" , riceID})
     }catch(error){
