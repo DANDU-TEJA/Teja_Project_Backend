@@ -1,49 +1,34 @@
 const express = require("express");
-
-const app =express();
-
-const farmerRoutes =require('./routes/farmerRoutes')
-const riceRoutes=require('./routes/riceRoutes')
-const productRoutes=require('./routes/productRoutes');
-
-const cors =require('cors');
-
-
-//const cors=require('cors');
-
-//const path=require('path');
-
-//now convert the text into json format for that we need body parser
+const dotEnv = require('dotenv');
+const mongoose = require('mongoose');
+const vendorRoutes = require('./routes/vendorRoutes');
 const bodyParser = require('body-parser');
+const firmRoutes = require('./routes/firmRoutes');
+const productRoutes = require('./routes/productRoutes');
+const cors = require('cors');
+const path = require('path')
 
-const dotEnv=require("dotenv");
-const mongoose=require("mongoose");
-
-// app.use(cors());
+const app = express()
 
 const PORT = process.env.PORT || 4000;
+
 dotEnv.config();
-app.use(cors());
+app.use(cors())
 
 mongoose.connect(process.env.MONGO_URI)
-    .then(()=>console.log("Teja Mongo DB Connected Successfully"))
-    .catch((error)=>console.log(error))
+    .then(() => console.log("MongoDB connected successfully!"))
+    .catch((error) => console.log(error))
 
-    app.use(bodyParser.json());
-    //Now To Use The HTTP methods We Need The Middle Wares
-    app.use('/farmer',farmerRoutes);
-    
-    app.use('/rice',riceRoutes);
-    
-    app.use('/product',productRoutes); 
-   // app.use('/uploads',express.static('uploads'));
-    
+app.use(bodyParser.json());
+app.use('/vendor', vendorRoutes);
+app.use('/firm', firmRoutes)
+app.use('/product', productRoutes);
+app.use('/uploads', express.static('uploads'));
 
-app.listen(PORT,()=>{
-    console.log(`Teja Server Started At ${PORT}`);
+app.listen(PORT, () => {
+    console.log(`server started and running at ${PORT}`);
 });
 
-app.use('/',(req,res)=>{
-    res.send("<h1>Teja Welcome To MERN Project");
-});
-
+app.use('/', (req, res) => {
+    res.send("<h1> Welcome to SUBY");
+})
