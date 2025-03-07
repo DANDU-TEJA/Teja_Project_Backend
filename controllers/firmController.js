@@ -26,9 +26,9 @@ const addFirm = async(req, res) => {
             res.status(404).json({ message: "Vendor not found" })
         }
 
-        if (vendor.firm.length > 0) {
-            return res.status(400).json({ message: "vendor can have only one firm" });
-        }
+        // if (vendor.firm.length > 0) {
+        //     return res.status(400).json({ message: "vendor can have only one firm" });
+        // }
 
         const firm = new Firm({
             firmName,
@@ -51,12 +51,12 @@ const addFirm = async(req, res) => {
 
 
 
-        return res.status(200).json({ message: 'Firm Added successfully ', firmId, vendorFirmName });
+        return res.status(200).json({ message: 'Crop Added successfully ', firmId, vendorFirmName });
 
 
     } catch (error) {
         console.error(error)
-        res.status(500).json("intenal server error")
+        res.status(500).json("Repeated Crop is Not Taking in firmController")
     }
 }
 

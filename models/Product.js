@@ -9,11 +9,13 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    category: {
-        type: [{
-            type: String,
-            enum: ['veg', 'non-veg']
-        }]
+    quantity:{
+        type:String,
+        required:true
+    },
+    color:{
+        type:String,
+        required:true
     },
     image: {
         type: String
@@ -27,6 +29,10 @@ const productSchema = new mongoose.Schema({
     firm: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Firm'
+    }],
+    vendor:[{//new Change
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Vendor'
     }]
 });
 

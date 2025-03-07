@@ -2,6 +2,7 @@ const Product = require("../models/Product");
 const multer = require("multer");
 const Firm = require('../models/Firm')
 const path = require('path');
+const Vendor=require ("../models/Vendor");// New Change
 
 
 const storage = multer.diskStorage({
@@ -14,27 +15,35 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
+//Add Product
 const addProduct = async(req, res) => {
     try {
-        const { productName, price, category, bestSeller, description } = req.body;
+        const { productName, price,quantity,color,bestSeller, description } = req.body;
         const image = req.file ? req.file.filename : undefined;
 
         const firmId = req.params.firmId;
         const firm = await Firm.findById(firmId);
+        const vendorId=req.params.vendorId;//New Change
+        const vendor=await Vendor.findById(vendorId);// new change
 
         if (!firm) {
             return res.status(404).json({ error: "No firm found" });
+        }
+        if(!vendor){//new Change
+            return res.status(404).json({ error: "No vendor found in productController" });
         }
 
         const product = new Product({
             productName,
             price,
-            category,
+            quantity,
+            color,
+            image,
             bestSeller,
             description,
-            image,
-            firm: firm._id
+            
+            firm: firm._id,
+            vendor:vendor._id //new change
         })
 
         const savedProduct = await product.save();
@@ -43,11 +52,11 @@ const addProduct = async(req, res) => {
 
         await firm.save()
 
-        res.status(200).json(savedProduct)
+        res.status(200).json(savedProduct);
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal server error" })
+        res.status(500).json({ error: "Internal server error in Product controller" })
     }
 }
 
@@ -69,6 +78,17 @@ const getProductByFirm = async(req, res) => {
         res.status(500).json({ error: "Internal server error" })
     }
 }
+//Get All Products from All Farmers
+const getAllProducts = async (req, res) => {
+    try{
+        const products = await Product.find().populate('firm vendor');//populate
+        res.status(200).json(products);
+    }catch(error){
+        console.error(error,"New Change in ProductCtrl");
+        res.status(500).json({error: "Internal server error in Product controller" });
+    }
+};
+
 
 const deleteProductById = async(req, res) => {
     try {
@@ -86,4 +106,7 @@ const deleteProductById = async(req, res) => {
     }
 }
 
-module.exports = { addProduct: [upload.single('image'), addProduct], getProductByFirm, deleteProductById };
+module.exports = { addProduct: [upload.single('image'), addProduct],
+     getProductByFirm, 
+     getAllProducts,
+     deleteProductById,};

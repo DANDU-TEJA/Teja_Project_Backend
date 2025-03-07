@@ -5,6 +5,11 @@ const vendorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    phone:{
+        type:String,
+        required:true,
+        unique:true
+    },
     email: {
         type: String,
         required: true,
@@ -13,6 +18,26 @@ const vendorSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    district:{
+        type:String,
+        required:true
+    },
+    mandal:{
+        type:String,
+        required:true
+    },
+    village:{
+        type:String,
+        required:true
+    },
+    survey:{
+        type:String,
+        required:true
+    },
+    location:{
+        type:String,
+        required:true
     },
     firm: [{
         type: mongoose.Schema.Types.ObjectId,
