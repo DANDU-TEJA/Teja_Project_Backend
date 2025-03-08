@@ -26,6 +26,9 @@ const productSchema = new mongoose.Schema({
     description: {
         type: String
     },
+    imageUrl:{
+        type:String
+    },
     firm: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Firm'
