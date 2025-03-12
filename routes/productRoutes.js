@@ -1,10 +1,15 @@
 const express = require('express');
 const productController = require("../controllers/productController");
 
+const path = require('path');
+const { route } = require('./vendorRoutes');
+
 const router = express.Router();
 
-router.post('/add-product/:firmId/:vendorId', productController.addProduct);//vendorId Added newly
-router.get('/:firmId/products', productController.getProductByFirm);
+router.post('/add-product/:vendorId', productController.addProduct);//vendorId Added newly 11/3/25
+//router.get('/:firmId/products', productController.getProductByFirm);
+
+router.get('/get-product/:vendorId',productController.getProductsByVendor);
 
 router.get('/all-products',productController.getAllProducts);
 

@@ -29,14 +29,10 @@ const productSchema = new mongoose.Schema({
     imageUrl:{
         type:String
     },
-    firm: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Firm'
-    }],
-    vendor:[{//new Change
+    vendor:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Vendor'
-    }]
+    }]//New Change 11/3/25
 });
 
 const Product = mongoose.model('Product', productSchema);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const vendorSchema = new mongoose.Schema({
+const vendorSchema = new mongoose.Schema({ //farmerSchema
     username: {
         type: String,
         required: true
@@ -39,12 +39,13 @@ const vendorSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    firm: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Firm'
-    }]
+    products: [{
+        type: mongoose.Schema.Types.ObjectId, //Firm Concept is Removed..
+        ref: 'Product'//Farmer
+    }],
+    
 });
 
-const Vendor = mongoose.model('Vendor', vendorSchema);
+const Vendor = mongoose.model('Vendor', vendorSchema); //Farmer ('Farmer', farmerSchema)
 
-module.exports = Vendor;
+module.exports = Vendor; //Farmer
