@@ -1,6 +1,6 @@
 const Product = require("../models/Product");
 const multer = require("multer");
-//const Firm = require('../models/Firm') removed Firm 11/3/25
+
 const path = require('path');
 const Vendor=require ("../models/Vendor");// New Change
 
@@ -21,14 +21,9 @@ const addProduct = async(req, res) => {
         const { productName, price,quantity,color,bestSeller, description,imageUrl } = req.body;
         const image = req.file ? req.file.filename : undefined;
 
-    //    const firmId = req.params.firmId;
-    //     const firm = await Firm.findById(firmId); firm removed 11/3/25
         const vendorId=req.params.vendorId;//New Change
         const vendor=await Vendor.findById(vendorId);// new change
 
-        // if (!firm) {
-        //     return res.status(404).json({ error: "No firm found" });
-        // }   firm removed 11/03/25
 
 
         if(!vendor){//new Change
@@ -45,13 +40,12 @@ const addProduct = async(req, res) => {
             description,
             imageUrl,
             
-            //firm: firm._id, removed firm 11/3/25
             vendor:vendor._id //new change
         })
 
         const savedProduct = await product.save();
 
-        //firm.products.push(savedProduct);
+
         vendor.products.push(savedProduct._id);
 
         await vendor.save();
@@ -67,27 +61,6 @@ const addProduct = async(req, res) => {
     }
 }
 
-
-// const getProductByFirm = async(req, res) => {
-//     try {
-//         const firmId = req.params.firmId;
-//         const firm = await Firm.findById(firmId);
-
-//         if (!firm) {
-//             return res.status(404).json({ error: "No firm found" });
-//         }
-
-//         const restaurantName = firm.firmName;
-//         const products = await Product.find({ firm: firmId });
-
-//         res.status(200).json({ restaurantName, products });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: "Internal server error" })
-//     }
-// }
-
-//Get Product By Vendor
 
 const getProductsByVendor = async (req, res) => {
     try {
@@ -122,6 +95,37 @@ const getAllProducts = async (req, res) => {
     }
 };
 
+// Update Product by ID
+const updateProductById = async (req, res) => {
+    try {
+        const productId = req.params.productId;
+        const { productName, price, quantity, color, bestSeller, description, imageUrl } = req.body;
+        const image = req.file ? req.file.filename : undefined;
+
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({ error: "Product not found" });
+        }
+
+        // Update fields if they exist in the request
+        if (productName) product.productName = productName;
+        if (price) product.price = price;
+        if (quantity) product.quantity = quantity;
+        if (color) product.color = color;
+        if (bestSeller !== undefined) product.bestSeller = bestSeller;
+        if (description) product.description = description;
+        if (imageUrl) product.imageUrl = imageUrl;
+        if (image) product.image = image;
+
+        const updatedProduct = await product.save();
+
+        res.status(200).json(updatedProduct);
+        console.log("Product updated successfully", updatedProduct);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error in Product controller to Update Product" });
+    }
+};
 
 const deleteProductById = async(req, res) => {
     try {
@@ -143,5 +147,5 @@ module.exports = { addProduct: [upload.single('image'), addProduct],
     
      getAllProducts,
      deleteProductById,
-    getProductsByVendor};
-     // getProductByFirm, 
+     updateProductById,
+     getProductsByVendor};
