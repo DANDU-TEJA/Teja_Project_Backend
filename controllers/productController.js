@@ -1,20 +1,23 @@
 const Product = require("../models/Product");
-const multer = require("multer");
-//This is comment line 
-const path = require('path');
+//const multer = require("multer");
+//This is comment line  
+ const path = require('path');
 const Vendor=require ("../models/Vendor");// New Change
+//import multerConfig from "../middlewares/multerConfig";
 
+//const storage = multer.diskStorage({...});
 
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/'); // Destination folder where the uploaded images will be stored
-    },
-    filename: function(req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname)); // Generating a unique filename
-    }
-});
+//const upload = multer({ storage: storage });
 
-const upload = multer({ storage: storage });
+//     destination: function(req, file, cb) {
+//         cb(null, 'uploads/'); // Destination folder where the uploaded images will be stored
+//     },
+//     filename: function(req, file, cb) {
+//         cb(null, Date.now() + path.extname(file.originalname)); // Generating a unique filename
+//     }
+// });
+
+// const upload = multer({ storage: storage });
 //Add Product
 const addProduct = async(req, res) => {
     try {
@@ -143,8 +146,8 @@ const deleteProductById = async(req, res) => {
     }
 }
 
-module.exports = { addProduct: [upload.single('image'), addProduct],
-    
+module.exports = {
+    addProduct,
      getAllProducts,
      deleteProductById,
      updateProductById,

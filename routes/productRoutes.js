@@ -6,7 +6,9 @@ const { route } = require('./vendorRoutes');
 
 const router = express.Router();
 
-router.post('/add-product/:vendorId', productController.addProduct);//vendorId Added newly 11/3/25
+const upload = require('../middlewares/multerConfig');
+
+router.post('/add-product/:vendorId',upload.single('image') ,productController.addProduct);//vendorId Added newly 11/3/25
 //router.get('/:firmId/products', productController.getProductByFirm);
 
 router.get('/get-product/:vendorId',productController.getProductsByVendor);
@@ -20,7 +22,7 @@ router.get('/uploads/:imageName', (req, res) => {
 });
 
 // Update product by ID route
-router.put('/update-product/:productId', productController.updateProductById);
+router.put('/update-product/:productId',upload.single('image') ,productController.updateProductById);
 
 router.delete('/:productId', productController.deleteProductById);
 
